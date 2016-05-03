@@ -1,5 +1,9 @@
 from random import randint
 
+global isDatabaseGenerated
+isDatabaseGenerated=False
+global total_devices
+
 def generateRandomHex():
     randomInteger=randint(16,255)
     randomHex=hex(randomInteger)
@@ -19,6 +23,8 @@ def generateDatabase():
     print " Enter number of devices "
     global n
     n=input()
+    total_devices=n
+    print total_devices
     global deviceList
     deviceList=[None]*(n+1)    
     for i in range(1,n+1):
@@ -39,13 +45,20 @@ while(1):
     elif (choice==1):
         print " > Generating New Database "
         generateDatabase()
+        isDatabaseGenerated=True
         print " > Generated "+str(n)+" devices"
     elif(choice==2):
-        print " > Enter Device ID "
-        temp=input()
-        print " --------------- "
-        print " DEVICE ID : "+str(temp)
-        print deviceList[temp]
+        if(isDatabaseGenerated==True):
+            print " > Enter Device ID "
+            temp=input()
+            if(temp < len(deviceList)):
+                print " --------------- "
+                print " DEVICE ID : "+str(temp)
+                print deviceList[temp]
+            else:
+                print " NO SUCH DEVICE ID FOUND "
+        else:
+            print " No Database generated yet. Generate Database First "
     elif(choice==3):
         print " > Display everything "
         dumpWholeDatabase()
